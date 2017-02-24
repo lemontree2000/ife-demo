@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .clearfix:before,.clearfix:after {
+        content:"";
+        display:table;
+    }
+    .clearfix:after {
+        clear:both;
+        overflow:hidden;
+    }
+    /*与作业无关*/
+    .wrapper {
+      width: 900px;
+      margin: 20px auto 0 auto;
+    }
+    .left,.right {
+      height: 600px;
+      border: 1px solid #7F5F65;
+      font-size: 16px;
+      padding-left: 20px;
+    }
+    .left {
+      float: left;
+      width: 428px;   
+    }
+    .right {
+      float: right;
+      width: 428px;
+    }
+    .wrapper h1 {
+      text-align: center;
+    }
+    /*与作业无关 end*/
+
+    /*方案一*/
+    input {
+      outline: none;
+      padding: 0;
+      margin: 0;
+      width: 0;
+      height: 0;
+    }
+    .left .radio-box {
+      float: left;
+      width: 16px;
+      height: 16px;
+      background: url('sprite.png') -16px 0 no-repeat;
+    }
+    .left .radio input:checked ~ div{
+      background: url('sprite.png') 0 0 no-repeat;
+    }
+    .left .checkbox-box {
+      float: left;
+      width: 14px;
+      height: 14px;
+      background: url('sprite.png') -17px -22px no-repeat;    
+    }
+    .left .checkbox input {
+      width: 0;
+    }
+    .left .checkbox label {
+      line-height: 14px;
+      vertical-align: top;
+    }
+    .left .checkbox input:checked  ~ div{
+      background: url('sprite.png') -1px -22px no-repeat;
+    }
+    /*方案二*/
+    .right label {
+      padding-left: 20px;
+    }
+    .right input {
+      position: relative;
+    }
+    .right .radio input::before,.right .radio input::after{
+      content: ' ';
+      display: block;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .right .radio input::after{
+      width: 6px;
+      height: 6px;
+      background-color: #fff;
+      left: -14px;
+      top: -10px;
+    }
+    .right .radio input::before{
+      border-color: #c33;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #ccc;
+      top: -16px;
+      left: -20px;
+    }
+    .right .radio input:checked:after {
+      background-color: #c33;
+    }
+    .right .radio input:checked:before {
+      border-color: #c33;
+    }
+
+
+
+    .right .checkbox input::before,.right .checkbox input::after{
+      content: ' ';
+      display: inline-block;
+      position: absolute;
+    }
+    .right .checkbox input::after{
+      content: '√';
+      left: -17px;
+      top: -14px;
+      font-size: 12px;
+      font-family: initial;
+      color: #fff;
+    }
+    .right .checkbox input::before{
+      width: 14px;
+      height: 14px;
+      border-color: #c33;
+      border: 1px solid #ccc;
+      top: -16px;
+      left: -20px;
+    }
+    .right .checkbox input:checked:after {
+      color: #c33;
+    }
+    .right .checkbox input:checked:before {
+      border-color: #c33;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="left">
+      <h1>方案一</h1>
+      <!--方案一 -->
+      <div class="radio">
+        <label ><input type="radio" name="1" /><div class="radio-box"></div>爱好 code</label><br/>
+        <label ><input type="radio" name="1" ><div class="radio-box"></div>爱好 编程</label>
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox" name="1"/><div class="checkbox-box"></div>爱好 code</label><br/>
+        <label><input type="checkbox" name="1"><div class="checkbox-box"></div>爱好 编程</label>
+      </div>
+    <!--方案一-->
+    </div>
+    <div class="right">
+      <h1>方案二</h1>
+    <!--方案二-->  
+      <div class="radio">
+        <label ><input type="radio" name="1" />爱好 code</label><br/>
+        <label ><input type="radio" name="1" />爱好 编程</label>
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox" name="1"/>爱好 code</label><br/>
+        <label><input type="checkbox" name="1">爱好 编程</label>
+      </div>
+    <!--方案二--> 
+  </div>  
+</body>
+</html>
