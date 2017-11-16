@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>IFE JavaScript Task 04</title>
+  <style>
+    body {
+      padding: 20px;
+    }
+
+    ul,
+    li {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    #list {
+      margin-top: 20px;
+      height: 40px;
+    }
+
+    #list li {
+      display: inline-block;
+      height: 100%;
+      background: red;
+      min-width: 40px;
+      text-align: center;
+      line-height: 40px;
+      color: #fff;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <input type="number" id="text">
+    <button id="left-in">左侧入</button>
+    <button id="left-out">左侧出</button>
+    <button id="right-in">右侧入</button>
+    <button id="right-out">右侧出</button>
+  </div>
+  <ul id="list">
+  </ul>
+  <script>
+    // 获取元素
+    var oList = document.getElementById('list');
+    var oText = document.getElementById('text');
+    var oLeftIn = document.getElementById('left-in');
+    var oLeftOut = document.getElementById('left-out');
+    var oRightIn = document.getElementById('right-in');
+    var oRightOut = document.getElementById('right-out');
+    var oChildren = oList.children;
+
+    // 创建元素并监听点击事件
+    function createEl() {
+      var oLi = document.createElement('li');
+      var text = oText.value;
+      oLi.innerHTML = text;
+      oLi.addEventListener('click', function () {
+        alert(this.innerHTML);
+        oList.removeChild(this);
+      })
+      return oLi;
+    }
+    // 处理点击
+    function handleClick(op) {
+      var el = createEl();
+      var aListChild = oList.children;
+      console.log(op);
+      switch (op) {
+        case 'addLeft':
+          if (aListChild.length) {
+            oList.insertBefore(el, oList.firstChild)
+          } else {
+            oList.appendChild(el);
+          }
+          break;
+        case 'addRight':
+          oList.appendChild(el);
+          break;
+        case 'removeLeft':
+          if (!aListChild.length) return alert('没有可删除的元素');
+          alert(oList.firstChild.innerHTML)
+          oList.removeChild(oList.firstChild);
+          break;
+        case 'removeRight':
+          if (!aListChild.length) return alert('没有可删除的元素');
+          alert(oList.lastChild.innerHTML);
+          oList.removeChild(oList.lastChild);
+          break;
+      }
+    }
+
+    // 监听button事件
+    oLeftIn.addEventListener('click', handleClick.bind(this, 'addLeft'), false);
+    oLeftOut.addEventListener('click', handleClick.bind(this, 'removeLeft'), false);
+    oRightIn.addEventListener('click', handleClick.bind(this, 'addRight'), false);
+    oRightOut.addEventListener('click', handleClick.bind(this, 'removeRight'), false);
+  </script>
+</body>
+
+</html>
