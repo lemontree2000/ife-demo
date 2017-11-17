@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>IFE JavaScript Task 05</title>
+  <style>
+    body {
+      padding: 20px;
+    }
+
+    ul,
+    li {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    #list {
+      margin-top: 20px;
+      height: 100px;
+    }
+
+    #list li {
+      display: inline-block;
+      background: red;
+      width: 20px;
+      text-align: center;
+      color: #fff;
+      margin-left: 10px;
+      vertical-align: bottom;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <input type="number" id="text">
+    <button id="left-in">左侧入</button>
+    <button id="left-out">左侧出</button>
+    <button id="right-in">右侧入</button>
+    <button id="right-out">右侧出</button>
+    <button id="sort">排序</button>
+  </div>
+  <ul id="list">
+  </ul>
+  <script>
+    // 获取元素
+    var oList = document.getElementById('list');
+    var oText = document.getElementById('text');
+    var oLeftIn = document.getElementById('left-in');
+    var oLeftOut = document.getElementById('left-out');
+    var oRightIn = document.getElementById('right-in');
+    var oRightOut = document.getElementById('right-out');
+    var oSortBtn = document.getElementById('sort');
+    var oChildren = oList.children;
+    var elArr = [12,23,10,54,23,56];
+    const maxHeight = 100;
+
+    // 创建元素并监听点击事件
+    // function createEl() {
+    //   var oLi = document.createElement('li');
+
+    //   // oLi.innerHTML = text;
+    //   oLi.style.height = (maxHeight * text/maxHeight) + 'px';
+    //   oLi.addEventListener('click', function () {
+    //     alert(this.innerHTML);
+    //     oList.removeChild(this);
+    //   })
+    //   oText.value = parseInt(oText.value) + 1;
+    //   return oLi;
+    // }
+
+    function validateInput() {
+      var text = oText.value;
+      if (text < 10 || text > 100) {
+        alert('请输入10到100之间的数字');
+        return false;
+      } else if (oChildren.length > 60) {
+        alert('最大队列为60');
+        return false;
+      }
+      return true;
+    }
+
+    function render(arr) {
+      oList.innerHTML = '';
+      for (let i = 0; i < arr.length; i++) {
+        var oLi = document.createElement('li');
+        oLi.style.height = (maxHeight * arr[i]/maxHeight) + 'px';
+        oLi.addEventListener('click', function () {
+          alert(this.innerHTML);
+          oList.removeChild(this);
+        })
+        oList.appendChild(oLi);  
+      }
+    }
+
+    // 处理点击
+    function handleClick(op) {
+      if (!validateInput()) return;
+      var text = oText.value;
+      switch (op) {
+        case 'addLeft':
+          elArr.unshift(text);
+          break;
+        case 'addRight':
+          elArr.push(text);
+          break;
+        case 'removeLeft':
+          if (!elArr.length) return alert('没有可删除的元素');
+          alert(elArr.shift());
+          break;
+        case 'removeRight':
+          if (!elArr.length) return alert('没有可删除的元素');
+          alert(elArr.pop());
+          break;
+      }
+      render(elArr);
+    }
+    function bubbleSort(arr) {
+      var timer;
+      var length = arr.length;
+      var count = 0;
+      var tempArr = arr.slice();
+
+      timer = setInterval(() => {
+        for (var j = 0; j < length - 1 - count; j++) {
+          if (tempArr[j] > tempArr[j +1]) {
+            var temp = tempArr[j +1];
+            tempArr[j+1] = tempArr[j];
+            arr[j] = temp;
+          }
+        }
+        count++;
+        if (count == length) {
+          console.log('over');
+          clearInterval(timer);
+        }
+        console.log(tempArr);
+      }, 200);
+    }
+
+    // 监听button事件
+    oSortBtn.addEventListener('click', function() {
+      bubbleSort(elArr)
+    }, false)
+    oLeftIn.addEventListener('click', handleClick.bind(this, 'addLeft'), false);
+    oLeftOut.addEventListener('click', handleClick.bind(this, 'removeLeft'), false);
+    oRightIn.addEventListener('click', handleClick.bind(this, 'addRight'), false);
+    oRightOut.addEventListener('click', handleClick.bind(this, 'removeRight'), false);
+
+  </script>
+</body>
+
+</html>
